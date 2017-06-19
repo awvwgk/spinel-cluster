@@ -1,4 +1,4 @@
-# Easy set up for spinel geomtries
+# Set up for a spinel lattice
 creates xyz-files for normal spinel types
 
 the program is invoked with ruby
