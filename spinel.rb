@@ -127,21 +127,29 @@ A,B,X  = ARGV.shift,ARGV.shift,ARGV.shift # atom types
 $r_max = ARGV.shift.to_f
 $x,$y,$z = ARGV.shift.to_f,ARGV.shift.to_f,ARGV.shift.to_f
 
-#$x-$a while $x>$a
-#$y-$a while $y>$a
-#$z-$a while $z>$a
-#
-#ratio = ceil($r_max/$a)
+$x-$a while $x>$a
+$y-$a while $y>$a
+$z-$a while $z>$a
+
+ratio = ($r_max/$a).ceil
 
 spinel = Array.new
 
-spinel.place_ccp X, $x, $y, $z
-spinel.place_ohh B, $x, $y, $z
-spinel.place_tdh A, $x, $y, $z
+((-ratio)...(ratio)).each do |i|
+	((-ratio)...(ratio)).each do |j|
+		((-ratio)...(ratio)).each do |k|
+			spinel.place_ccp X, i*$a, j*$a, k*$a
+			spinel.place_ohh B, i*$a, j*$a, k*$a
+			spinel.place_tdh A, i*$a, j*$a, k*$a
+		end
+	end
+end
 
-#spinel.select! do |atom|
-#	atom.in_range? $r_max
-#end
+spinel.uniq!
+
+spinel.select! do |atom|
+	atom.in_range? $r_max
+end
 
 puts spinel.length
 puts ''
